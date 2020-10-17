@@ -10,14 +10,14 @@ export class GithubService {
   constructor(private http: HttpClient) { }
 
 
-  getRepositories(name: string): Observable<Object> {
-    const url = this.getSearchInRepositoriesUrl(name);
+  getRepositories(name: string, pageNumber: number): Observable<Object> {
+    const url = this.getSearchInRepositoriesUrl(name, pageNumber);
 
     return this.http.get(url);
   }
 
-  private getSearchInRepositoriesUrl(name: string): string {
-    return `https://api.github.com/search/repositories?q=${name}&per_page=30`;
+  private getSearchInRepositoriesUrl(name: string, pageNumber: number): string {
+    return `https://api.github.com/search/repositories?q=${name}&page=${pageNumber}&per_page=10`;
   }
 
 }

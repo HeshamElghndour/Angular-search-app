@@ -1,6 +1,4 @@
 
-<input type="search" (keyup)="gitSearchResults($event.target.value)">
-<ul *ngFor="let result of results">
-  <li>{{result.name}}</li>
-</ul>
+<app-search></app-search>
+
 <router-outlet></router-outlet>

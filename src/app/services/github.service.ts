@@ -7,9 +7,8 @@ import {map, startWith, shareReplay} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class GithubService {
-
   constructor(private http: HttpClient) { }
-  repos;
+  repos:any = "";
 
   getRepositories(name: string, pageNumber: number): Observable<Object> {
     const searchKey = `${name}_${pageNumber}`;
@@ -25,11 +24,6 @@ export class GithubService {
         startWith(JSON.parse(localStorage.getItem(searchKey)))
       );
     } 
-    // else {
-    //   this.repos = this.repos.pipe(
-    //     startWith(JSON.parse(localStorage[CACHE_KEY] || '[]'))
-    //   )
-    // }
     return this.repos;
   }
 

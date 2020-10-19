@@ -1,8 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import {GithubService} from '../../services/github.service';
-import {MatAccordion} from '@angular/material/expansion';
-
-
 
 @Component({
   selector: 'app-search',
@@ -11,19 +8,16 @@ import {MatAccordion} from '@angular/material/expansion';
 })
 export class SearchComponent implements OnInit {
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+  constructor(private githubService: GithubService) {}
 
-  @ViewChild(MatAccordion) accordion: MatAccordion;
-
-  title = 'search-app';
   results:any = [];
   pageNumber:number = 1;
   showPagination:boolean = false;
 
-  constructor(private githubService: GithubService) {}
 
   prevPage(searchQuery) {
+    if (this.pageNumber <= 1) return;
     this.pageNumber -= 1;
     this.gitSearchResults(searchQuery, this.pageNumber);
   }
@@ -35,6 +29,7 @@ export class SearchComponent implements OnInit {
 
 
   gitSearchResults(searchQuery, pageNumber?:number) {
+    this.showPagination = false;
     if (searchQuery.value.length == 0) return;
     this.githubService.getRepositories(searchQuery.value, this.pageNumber).subscribe(data => {
       this.results = data['items'];

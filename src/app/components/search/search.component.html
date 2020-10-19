@@ -9,8 +9,8 @@
     </div>
   </div>
 
-  <ul class="list-group" *ngFor="let result of results">
-    <li class="list-group-item">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let result of results">
       <div class="media">
         <img style="max-width: 40px;" class="mr-3" src="{{result.owner.avatar_url}}" alt="">
         <div class="media-body">
@@ -22,7 +22,6 @@
         </div>
       </div>
     </li>
-    
   </ul>
 
   <nav *ngIf="showPagination" aria-label="Page navigation">
@@ -31,4 +30,5 @@
       <li (click)="nextPage(searchQuery)" class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
+  <p *ngIf="noresults">No results found</p>
 </div>

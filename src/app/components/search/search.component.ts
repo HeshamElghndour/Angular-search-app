@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   results:any = [];
   pageNumber:number = 1;
   showPagination:boolean = false;
+  noresults:boolean = false;
 
 
   prevPage(searchQuery) {
@@ -33,7 +34,12 @@ export class SearchComponent implements OnInit {
     if (searchQuery.value.length == 0) return;
     this.githubService.getRepositories(searchQuery.value, this.pageNumber).subscribe(data => {
       this.results = data['items'];
-      this.showPagination = true;
+      if (this.results === undefined || this.results.length == 0) {
+        this.noresults = true;
+      } else {
+        this.noresults = false;
+        this.showPagination = true;
+      }
     })
   }
 

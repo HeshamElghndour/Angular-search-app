@@ -9,6 +9,8 @@ import {map, startWith, shareReplay} from 'rxjs/operators';
 export class GithubService {
   constructor(private http: HttpClient) { }
   repos:any = "";
+  apiUrl:string = 'https://api.github.com/search/repositories';
+  pageLimit:number = 10;
 
   getRepositories(name: string, pageNumber: number): Observable<Object> {
     const searchKey = `${name}_${pageNumber}`;
@@ -18,7 +20,7 @@ export class GithubService {
     this.repos.subscribe(data => {
       localStorage.setItem(searchKey, JSON.stringify(data));
     })
-    
+
     if (localStorage.getItem(searchKey)) {
       this.repos = this.repos.pipe(
         startWith(JSON.parse(localStorage.getItem(searchKey)))
@@ -28,6 +30,6 @@ export class GithubService {
   }
 
   private getSearchInRepositoriesUrl(name: string, pageNumber: number): string {
-    return `https://api.github.com/search/repositories?q=${name}&page=${pageNumber}&per_page=10`;
+    return `${this.apiUrl}?q=${name}&page=${pageNumber}&per_page=${this.pageLimit}`;
   }
 }
